@@ -8,7 +8,29 @@
   --muted: #6b5b63;
   --rose-deep: #a83d66;
   --rose-dark: #8f3157;
+  --title: #a83d66;
+  --surface: #ffffff;
+  --glow: #ffffff;
   --shadow: rgba(150, 120, 140, 0.25);
+  color-scheme: light;
+}
+
+/* 深色模式：手动切换或跟随系统时由 data-theme 控制 */
+[data-theme="dark"] {
+  --pink: #4a2839;
+  --mint: #24443a;
+  --lemon: #4a3d22;
+  --sky: #26374d;
+  --grape: #3b3158;
+  --ink: #f1e7ed;
+  --muted: #c9b8c2;
+  --rose-deep: #a83d66;
+  --rose-dark: #ff8fc0;
+  --title: #ffb3d4;
+  --surface: #352b41;
+  --glow: #20182b;
+  --shadow: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -67,8 +89,8 @@ body {
   margin: 0;
   font-size: clamp(2.2rem, 6vw, 3.6rem);
   letter-spacing: 2px;
-  color: var(--rose-deep);
-  text-shadow: 2px 3px 0 #fff, 4px 6px 0 var(--shadow);
+  color: var(--title);
+  text-shadow: 2px 3px 0 var(--glow), 4px 6px 0 var(--shadow);
   animation: wobble 3s ease-in-out infinite;
 }
 @keyframes wobble {
@@ -125,7 +147,7 @@ body {
   font: inherit;
   font-size: 1rem;
   color: var(--ink);
-  background: #fff;
+  background: var(--surface);
   box-shadow: 0 8px 18px var(--shadow);
 }
 .search-input::placeholder { color: var(--muted); opacity: 1; }
@@ -146,7 +168,7 @@ body {
   font: inherit;
   font-size: 0.9rem;
   font-weight: 600;
-  background: #fff;
+  background: var(--surface);
   color: var(--ink);
   box-shadow: 0 6px 14px var(--shadow);
   transition: transform 0.15s ease, background 0.15s ease;
@@ -174,13 +196,14 @@ main { position: relative; z-index: 1; }
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 1.1rem;
 }
+.animal-item { position: relative; }
 .animal-item[hidden] { display: none; }
 .animal-card {
   width: 100%;
   height: 100%;
   font: inherit;
   color: inherit;
-  background: #fff;
+  background: var(--surface);
   border-radius: 22px;
   padding: 1.2rem 0.8rem 1rem;
   text-align: center;
@@ -209,7 +232,7 @@ main { position: relative; z-index: 1; }
   margin: 0.6rem 0 0;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--rose-deep);
+  color: var(--title);
 }
 .card-hint {
   display: block;
@@ -224,6 +247,104 @@ main { position: relative; z-index: 1; }
   font-size: 1rem;
 }
 
+/* 收藏按钮（卡片右上角，独立于卡片按钮避免嵌套交互元素） */
+.fav-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--rose-deep);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.fav-btn:hover { transform: scale(1.12); }
+.fav-btn.is-faved {
+  background: var(--rose-deep);
+  color: #fff;
+}
+.fav-btn:focus-visible,
+.theme-toggle:focus-visible,
+.daily-open:focus-visible,
+.modal-fav:focus-visible {
+  outline: 3px solid var(--rose-dark);
+  outline-offset: 2px;
+}
+
+/* 每日一动物 */
+.daily {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.daily[hidden] { display: none; }
+.daily-label {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.daily-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 2px dashed var(--rose-deep);
+  border-radius: 20px;
+  padding: 0.9rem 1.2rem;
+  box-shadow: 0 8px 18px var(--shadow);
+}
+.daily-emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+  animation: bounce 2.4s ease-in-out infinite;
+}
+.daily-info {
+  flex: 1;
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  min-width: 0;
+}
+.daily-name {
+  font-weight: 700;
+  color: var(--title);
+  font-size: 1.1rem;
+}
+.daily-fact {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.daily-open {
+  border: none;
+  background: var(--rose-deep);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  white-space: nowrap;
+}
+.daily-open:hover { transform: translateY(-2px); }
+@media (max-width: 520px) {
+  .daily-card { flex-wrap: wrap; }
+  .daily-open { width: 100%; }
+}
+
 /* 页脚 */
 .site-footer {
   position: relative;
@@ -232,6 +353,24 @@ main { position: relative; z-index: 1; }
   padding: 2.5rem 1rem 2rem;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 30;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 14px var(--shadow);
 }
 
 /* 详情弹窗（原生 dialog） */
@@ -250,7 +389,7 @@ main { position: relative; z-index: 1; }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 .modal-card {
   position: relative;
-  background: #fff;
+  background: var(--surface);
   border-radius: 28px;
   padding: 2.2rem 1.8rem 2rem;
   max-width: 360px;
@@ -265,7 +404,7 @@ main { position: relative; z-index: 1; }
   to { transform: scale(1); opacity: 1; }
 }
 .modal-emoji { font-size: 4.5rem; line-height: 1.1; animation: bounce 1.6s ease-in-out infinite; }
-.modal-name { margin: 0.6rem 0 0; color: var(--rose-deep); font-size: 1.5rem; }
+.modal-name { margin: 0.6rem 0 0; color: var(--title); font-size: 1.5rem; }
 .modal-name-en {
   margin: 0.15rem 0 0;
   color: var(--muted);
@@ -323,7 +462,30 @@ main { position: relative; z-index: 1; }
 }
 .modal-close:hover { background: var(--rose-dark); }
 
+/* 详情弹窗内的收藏按钮（与关闭按钮对称） */
+.modal-fav {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.9rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--rose-deep);
+  font-size: 1.05rem;
+  cursor: pointer;
+  line-height: 1;
+  box-shadow: 0 3px 8px var(--shadow);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.modal-fav.is-faved {
+  background: var(--rose-deep);
+  color: #fff;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .title, .hero-emoji, .modal-emoji, .cloud { animation: none; }
+  .title, .hero-emoji, .modal-emoji, .cloud, .daily-emoji { animation: none; }
   .modal[open], .modal-card { animation: none; }
+  .fav-btn:hover, .daily-open:hover { transform: none; }
 }

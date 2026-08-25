@@ -4,7 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🐾 可爱动物园 · Cute Zoo</title>
-  <meta name="description" content="可爱动物园：认识 12 只毛茸茸的小动物，点开卡片解锁它们的冷知识，支持搜索、分类筛选，每只动物都有可以分享的专属链接。" />
+  <meta name="description" content="可爱动物园：认识 12 只毛茸茸的小动物，点开卡片解锁它们的冷知识，支持搜索筛选、收藏、每日一动物与深色模式。" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("cuteZoo.theme");
+        if (t !== "light" && t !== "dark") {
+          t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) { /* 无痕模式下忽略 */ }
+    })();
+  </script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="🐾 可爱动物园 · Cute Zoo" />
@@ -24,6 +35,7 @@
   </div>
 
   <header class="site-header">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色模式">🌙</button>
     <h1 class="title">🐾 可爱动物园</h1>
     <p class="subtitle">欢迎来到毛茸茸的小世界 · Welcome to the Cute Zoo</p>
   </header>
@@ -31,6 +43,18 @@
   <section class="hero">
     <div class="hero-emoji" id="heroEmoji">🐰</div>
     <p class="hero-text">点一点下面的小动物，看看它们的小秘密吧！</p>
+  </section>
+
+  <section class="daily" id="dailySection" hidden aria-labelledby="dailyLabel">
+    <p class="daily-label" id="dailyLabel">🌟 今日动物</p>
+    <div class="daily-card">
+      <span class="daily-emoji" id="dailyEmoji" aria-hidden="true"></span>
+      <div class="daily-info">
+        <span class="daily-name" id="dailyName"></span>
+        <span class="daily-fact" id="dailyFact"></span>
+      </div>
+      <button class="daily-open" id="dailyOpen" type="button">去看看 →</button>
+    </div>
   </section>
 
   <main>
@@ -52,6 +76,7 @@
   <dialog class="modal" id="modal" aria-labelledby="modalName">
     <div class="modal-card">
       <button class="modal-close" id="modalClose" type="button" aria-label="关闭详情">✕</button>
+      <button class="modal-fav" id="modalFav" type="button" aria-pressed="false" aria-label="收藏这只动物">♡</button>
       <div class="modal-emoji" id="modalEmoji">🐰</div>
       <h2 class="modal-name" id="modalName">小动物</h2>
       <p class="modal-name-en" id="modalNameEn"></p>
