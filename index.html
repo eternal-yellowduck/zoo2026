@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐾 可爱动物园 · Cute Zoo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sky">
+    <span class="cloud cloud-a">☁️</span>
+    <span class="cloud cloud-b">☁️</span>
+    <span class="cloud cloud-c">🍡</span>
+  </div>
+
+  <header class="site-header">
+    <h1 class="title">🐾 可爱动物园</h1>
+    <p class="subtitle">欢迎来到毛茸茸的小世界 · Welcome to the Cute Zoo</p>
+  </header>
+
+  <section class="hero">
+    <div class="hero-emoji" id="heroEmoji">🐰</div>
+    <p class="hero-text">点一点下面的小动物，看看它们的小秘密吧！</p>
+  </section>
+
+  <main>
+    <ul class="animal-grid" id="animalGrid" aria-label="动物列表"></ul>
+  </main>
+
+  <footer class="site-footer">
+    <p>用 ❤️ 和 🐾 做成 · Made with love</p>
+  </footer>
+
+  <!-- 详情弹窗 -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" id="modalCard">
+      <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
+      <div class="modal-emoji" id="modalEmoji">🐰</div>
+      <h2 class="modal-name" id="modalName">小动物</h2>
+      <p class="modal-fact" id="modalFact">小秘密～</p>
+    </div>
+  </div>
+
+  <script src="animals.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
