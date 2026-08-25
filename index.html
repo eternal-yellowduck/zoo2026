@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🐾 可爱动物园 · Cute Zoo</title>
+  <meta name="description" content="可爱动物园：认识 12 只毛茸茸的小动物，点开卡片解锁它们的冷知识，支持搜索、分类筛选，每只动物都有可以分享的专属链接。" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="🐾 可爱动物园 · Cute Zoo" />
+  <meta property="og:description" content="认识 12 只毛茸茸的小动物，解锁它们的冷知识，支持搜索筛选与链接分享。" />
+  <meta property="og:url" content="https://eternal-yellowduck.github.io/zoo2026/" />
+  <meta property="og:image" content="https://eternal-yellowduck.github.io/zoo2026/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="zh_CN" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -24,22 +34,32 @@
   </section>
 
   <main>
+    <div class="toolbar">
+      <label class="visually-hidden" for="searchInput">搜索动物名称</label>
+      <input type="search" id="searchInput" class="search-input"
+        placeholder="🔍 搜索动物名称…" autocomplete="off" />
+      <div class="chip-bar" id="chipBar" role="group" aria-label="按类别筛选"></div>
+    </div>
+
     <ul class="animal-grid" id="animalGrid" aria-label="动物列表"></ul>
+    <p class="empty-tip" id="emptyTip" hidden>没有找到匹配的小动物，换个关键词试试吧～</p>
   </main>
 
   <footer class="site-footer">
     <p>用 ❤️ 和 🐾 做成 · Made with love</p>
   </footer>
 
-  <!-- 详情弹窗 -->
-  <div class="modal" id="modal" hidden>
-    <div class="modal-card" id="modalCard">
-      <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
+  <dialog class="modal" id="modal" aria-labelledby="modalName">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" type="button" aria-label="关闭详情">✕</button>
       <div class="modal-emoji" id="modalEmoji">🐰</div>
       <h2 class="modal-name" id="modalName">小动物</h2>
-      <p class="modal-fact" id="modalFact">小秘密～</p>
+      <p class="modal-name-en" id="modalNameEn"></p>
+      <div class="modal-meta" id="modalMeta"></div>
+      <ul class="modal-facts" id="modalFacts"></ul>
+      <div class="modal-media" id="modalMedia" hidden></div>
     </div>
-  </div>
+  </dialog>
 
   <script src="animals.js"></script>
   <script src="script.js"></script>
